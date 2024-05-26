@@ -99,6 +99,7 @@ public class ContactosCovid {
 		this.localizacion = new Localizacion();
 		this.listaContactos = new ListaContactos();
 	}
+
 	private void cerrarFichero(FileReader fr) {
 		try {
 			if (null != fr) {
@@ -108,6 +109,7 @@ public class ContactosCovid {
 			e2.printStackTrace();
 		}
 	}
+	
 
 	public int findPersona(String documento) throws EmsPersonNotFoundException {
 		int pos;
@@ -194,32 +196,22 @@ public class ContactosCovid {
 	}
 
 	private PosicionPersona crearPosicionPersona(String[] data) {
-		PosicionPersona posicionPersona = new PosicionPersona();
-		String fecha = null, hora;
-		float latitud = 0, longitud;
-		for (int i = 1; i < Constantes.MAX_DATOS_LOCALIZACION; i++) {
-			String s = data[i];
-			switch (i) {
-			case 1:
-				posicionPersona.setDocumento(s);
-				break;
-			case 2:
-				fecha = data[i];
-				break;
-			case 3:
-				hora = data[i];
-				posicionPersona.setFechaPosicion(Utilidades.parsearFecha(fecha, hora));
-				break;
-			case 4:
-				latitud = Float.parseFloat(s);
-				break;
-			case 5:
-				longitud = Float.parseFloat(s);
-				posicionPersona.setCoordenada(new Coordenada(latitud, longitud));
-				break;
-			}
-		}
-		return posicionPersona;
+		String documento = data[1];
+		FechaHora fechaPosicion = crearFechaHora(data);
+		Coordenada coordenada = crearCoordenada(data);
+		return new PosicionPersona(coordenada,documento,fechaPosicion);
+	}
+
+	private Coordenada crearCoordenada(String[] data) {
+		float latitud = Float.parseFloat(data[4]);
+		float longitud = Float.parseFloat(data[5]);
+		return new Coordenada(latitud,longitud);
+	}
+
+	private FechaHora crearFechaHora(String[]data) {
+		String fecha = data[2];
+		String hora = data[3];
+		return Utilidades.parsearFecha(fecha,hora);
 	}
 
 	private void insertarDatos(String[] datas) throws EmsDuplicateLocationException, EmsInvalidTypeException, EmsInvalidNumberOfDataException, EmsDuplicatePersonException {
@@ -236,12 +228,15 @@ public class ContactosCovid {
 			}
 		}
 	}
+
 	private boolean esPersona(String nombre) {
 		return nombre.equals("PERSONA");
 	}
+
 	private boolean esLocalizacion(String nombre) {
 		return nombre.equals("LOCALIZACION");
 	}
+
 	private void insertarDatosLocalizacion(String[] datos) throws EmsInvalidNumberOfDataException, EmsDuplicateLocationException {
 		if (datos.length != Constantes.MAX_DATOS_LOCALIZACION) {
 			throw new EmsInvalidNumberOfDataException("El número de datos para LOCALIZACION es menor de 6");
@@ -250,6 +245,7 @@ public class ContactosCovid {
 		this.localizacion.addLocalizacion(pp);
 		this.listaContactos.insertarNodoTemporal(pp);
 	}
+
 	private void insertarDatosPersona(String[] datos) throws EmsInvalidNumberOfDataException, EmsDuplicatePersonException {
 		if (datos.length != Constantes.MAX_DATOS_PERSONA) {
 			throw new EmsInvalidNumberOfDataException("El número de datos para PERSONA es menor de 8");
