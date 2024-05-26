@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import com.practica.excecption.EmsDuplicateLocationException;
 import com.practica.excecption.EmsDuplicatePersonException;
@@ -17,6 +18,9 @@ import com.practica.excecption.EmsPersonNotFoundException;
 import com.practica.genericas.Constantes;
 import com.practica.genericas.Coordenada;
 import com.practica.genericas.Persona;
+import com.practica.genericas.DatosPersonales;
+import com.practica.genericas.FechaHora;
+import com.practica.genericas.DatosUbicacion;
 import com.practica.genericas.PosicionPersona;
 import com.practica.lista.ListaContactos;
 
@@ -182,34 +186,22 @@ public class ContactosCovid {
 	}
 
 	private Persona crearPersona(String[] data) {
-		Persona persona = new Persona();
-		for (int i = 1; i < Constantes.MAX_DATOS_PERSONA; i++) {
-			String s = data[i];
-			switch (i) {
-			case 1:
-				persona.setDocumento(s);
-				break;
-			case 2:
-				persona.setNombre(s);
-				break;
-			case 3:
-				persona.setApellidos(s);
-				break;
-			case 4:
-				persona.setEmail(s);
-				break;
-			case 5:
-				persona.setDireccion(s);
-				break;
-			case 6:
-				persona.setCp(s);
-				break;
-			case 7:
-				persona.setFechaNacimiento(Utilidades.parsearFecha(s));
-				break;
-			}
-		}
-		return persona;
+		DatosPersonales personalData = crearDatosPersonales(data);
+		DatosUbicacion ubicationData = crearDatosUbicacion(data);
+		String email= data[4];
+		return new Persona(email,personalData,ubicationData);
+	}
+	private DatosPersonales crearDatosPersonales(String[]data) {
+		String documento = data[1];
+		String nombre = data[2];
+		String apellidos = data[3];
+		FechaHora fechaNacimiento = Utilidades.parsearFecha(data[7]);
+		return new DatosPersonales(documento,nombre,apellidos,fechaNacimiento);
+	}
+	private DatosUbicacion crearDatosUbicacion(String[]data) {
+		String direccion = data[5];
+		String cp = data[6];
+		return new DatosUbicacion(direccion,cp);
 	}
 
 	private PosicionPersona crearPosicionPersona(String[] data) {

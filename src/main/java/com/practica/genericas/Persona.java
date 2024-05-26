@@ -2,78 +2,43 @@ package com.practica.genericas;
 
 
 public class Persona {
-	private String nombre, apellidos, documento, email, direccion, cp;
-	FechaHora fechaNacimiento;
+	private String email;
+	private DatosPersonales datosPersonales;
+	private DatosUbicacion datosUbicacion;
 
-	public Persona() {
-
-	}
-
-	public Persona(String nombre, String apellidos, String documento, String email, String direccion,
-			FechaHora fechaNacimiento) {
-		super();
-		this.nombre = nombre;
-		this.apellidos = apellidos;
-		this.documento = documento;
-		this.email = email;
-		this.direccion = direccion;
-		this.fechaNacimiento = fechaNacimiento;
+	public Persona(String email, DatosPersonales datosPersonales, DatosUbicacion datosUbicacion) {
+		this.email=email;
+		this.datosPersonales=datosPersonales;
+		this.datosUbicacion=datosUbicacion;
 	}
 
 	public String getNombre() {
-		return nombre;
+		return this.datosPersonales.getNombre();
 	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
 	public String getApellidos() {
-		return apellidos;
+		return this.datosPersonales.getApellidos();
 	}
 
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
-	}
 
 	public String getDocumento() {
-		return documento;
-	}
-
-	public void setDocumento(String documento) {
-		this.documento = documento;
+		return this.datosPersonales.getDocumento();
 	}
 
 	public String getEmail() {
 		return email;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
 	public String getDireccion() {
-		return direccion;
-	}
-
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+		return this.datosUbicacion.getDireccion();
 	}
 
 	public String getCp() {
-		return cp;
-	}
-
-	public void setCp(String cp) {
-		this.cp = cp;
+		return this.datosUbicacion.getCp();
 	}
 
 	public FechaHora getFechaNacimiento() {
-		return fechaNacimiento;
-	}
-
-	public void setFechaNacimiento(FechaHora fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
+		return this.datosPersonales.getFechaNacimiento();
 	}
 
 	@Override
