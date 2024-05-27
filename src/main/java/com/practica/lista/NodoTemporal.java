@@ -1,6 +1,7 @@
 package com.practica.lista;
 
 import com.practica.genericas.FechaHora;
+import com.practica.genericas.PosicionPersona;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,5 +32,23 @@ public class NodoTemporal {
 	}
 	public void setFecha(FechaHora fecha) {
 		this.fecha = fecha;
+	}
+
+	public static NodoTemporal getNodoFromPosicion(PosicionPersona p) {
+		NodoTemporal resultado = new NodoTemporal();
+		resultado.fecha = p.getFechaPosicion();
+		NodoPosicion nodoPosicion = NodoPosicion.getNodoFromPosicion(p);
+		resultado.insertarNodo(nodoPosicion);
+		return resultado;
+	}
+	private void insertarNodo(NodoPosicion nodo) {
+		int posicionNodo = listaCoordenadas.indexOf(nodo);
+		if(posicionNodo>=0) {
+			aumentarPersonas(listaCoordenadas.get(posicionNodo));
+		}
+		listaCoordenadas.add(nodo);
+	}
+	private void aumentarPersonas(NodoPosicion nodo){
+		nodo.aumentarPersonas();
 	}
 }
