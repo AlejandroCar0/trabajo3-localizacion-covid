@@ -11,12 +11,10 @@ import com.practica.genericas.Coordenada;
 public class NodoPosicion {
 	private Coordenada coordenada;	
 	private int numPersonas;
-	private NodoPosicion siguiente;
 	
 	
 	public NodoPosicion() {
 		super();
-		siguiente = null;
 	}
 
 	
@@ -26,7 +24,6 @@ public class NodoPosicion {
 		super();
 		this.coordenada = coordenada;		
 		this.numPersonas = numPersonas;
-		this.siguiente = siguiente;
 	}
 
 
@@ -46,14 +43,6 @@ public class NodoPosicion {
 
 	public void setNumPersonas(int numPersonas) {
 		this.numPersonas = numPersonas;
-	}
-
-	public NodoPosicion getSiguiente() {
-		return siguiente;
-	}
-
-	public void setSiguiente(NodoPosicion siguiente) {
-		this.siguiente = siguiente;
 	}
 	
 }
