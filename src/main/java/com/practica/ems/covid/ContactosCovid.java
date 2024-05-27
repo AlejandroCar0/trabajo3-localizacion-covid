@@ -109,27 +109,15 @@ public class ContactosCovid {
 			e2.printStackTrace();
 		}
 	}
-	
+
 
 	public int findPersona(String documento) throws EmsPersonNotFoundException {
-		int pos;
-		try {
-			pos = this.poblacion.findPersona(documento);
-			return pos;
-		} catch (EmsPersonNotFoundException e) {
-			throw new EmsPersonNotFoundException();
-		}
+			return  this.poblacion.findPersona(documento);
+
 	}
 
 	public int findLocalizacion(String documento, String fecha, String hora) throws EmsLocalizationNotFoundException {
-
-		int pos;
-		try {
-			pos = localizacion.findLocalizacion(documento, fecha, hora);
-			return pos;
-		} catch (EmsLocalizationNotFoundException e) {
-			throw new EmsLocalizationNotFoundException();
-		}
+			return  localizacion.findLocalizacion(documento, fecha, hora);
 	}
 
 	public List<PosicionPersona> localizacionPersona(String documento) throws EmsPersonNotFoundException {
@@ -186,7 +174,7 @@ public class ContactosCovid {
 		String documento = data[1];
 		String nombre = data[2];
 		String apellidos = data[3];
-		FechaHora fechaNacimiento = Utilidades.parsearFecha(data[7]);
+		FechaHora fechaNacimiento = FechaHora.parsearFecha(data[7]);
 		return new DatosPersonales(documento,nombre,apellidos,fechaNacimiento);
 	}
 	private DatosUbicacion crearDatosUbicacion(String[]data) {
@@ -211,7 +199,7 @@ public class ContactosCovid {
 	private FechaHora crearFechaHora(String[]data) {
 		String fecha = data[2];
 		String hora = data[3];
-		return Utilidades.parsearFecha(fecha,hora);
+		return FechaHora.parsearFecha(fecha,hora);
 	}
 
 	private void insertarDatos(String[] datas) throws EmsDuplicateLocationException, EmsInvalidTypeException, EmsInvalidNumberOfDataException, EmsDuplicatePersonException {
